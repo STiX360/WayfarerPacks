@@ -1,4 +1,4 @@
-# Wayfarer Packs 0.4.1
+# Wayfarer Packs 0.4.2
 
 An OpenMW prototype with a script-managed backpack slot. Drag a bag from your
 inventory onto your character to equip it. Repeat to unequip; another bag replaces
@@ -32,7 +32,7 @@ With OpenMW Crafting Framework enabled, these recipes appear under Crafting /
 Travel Packs. The framework discovers `CF_recipes/wayfarerPacks.lua` automatically.
 Load `CraftingFramework.omwscripts` before `WayfarerPacks.omwscripts`. Simply
 Crafting, Skill Framework, and Sun's Dusk are not required. Without the framework,
-this data file is unused: the packs still work and can be bought from Arrille.
+this data file is unused: the packs still work and can be bought from Traders.
 
 | Pack | Armorer Level | Leather/Hides |
 | --- | ---: | ---: |
@@ -88,11 +88,19 @@ content=WayfarerPacks.esp
 content=WayfarerPacks.omwscripts
 ```
 
-Arrille in Seyda Neen receives one of each bag on his next activation, including
-in existing saves. For testing, any missing bag is replenished each time he loads;
-existing stock is not duplicated. This also ignores earlier releases' one-time
-stock flag. Leave the shop and return or reload your save to trigger activation.
-No NPC records are replaced.
+The 45 vanilla torch sellers from UESP's Trader/Pawnbroker list, plus Arrille,
+receive fixed normal-pack stock on activation, including in existing saves.
+Eligibility is a static base-game snapshot, not a live check of torches or mods.
+Under 500 listed gold: one Satchel;
+500-999: one Satchel and one Backpack; 1,000+: one Backpack and one Expedition Pack.
+This uses wiki-listed gold, never the NPC's current money. Arrille (800 gold) sells
+the Satchel and Backpack.
+Missing assigned types replenish when the trader becomes active again; existing
+stock is not duplicated or deleted. Older extra stock and player-sold packs may
+remain, so the limit applies to the mod's assigned stock, not all resale items.
+No NPC records are replaced. Artisan packs remain crafting-only.
+Arrille also has a "travel packs" topic recommending the Satchel and Backpack.
+A one-shot startup script registers it; existing greetings are unchanged.
 Console commands can supply the bags immediately:
 
 ```text

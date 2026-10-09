@@ -4,6 +4,7 @@ local I = require('openmw.interfaces')
 local packs = require('scripts.wayfarer_packs.catalog')
 local core = require('openmw.core')
 local quality = require('scripts.wayfarer_packs.quality')
+local merchants = require('scripts.wayfarer_packs.merchants')
 local generated = {}
 local generatedCache = {}
 
@@ -78,10 +79,11 @@ I.ItemUsage.addHandlerForType(types.Miscellaneous, function(item, actor)
 end)
 
 local function stockMerchant(actor)
-    if actor.recordId ~= 'arrille' or not types.NPC.objectIsInstance(actor) then return end
+    local stock = merchants[actor.recordId]
+    if not stock or not types.NPC.objectIsInstance(actor) then return end
     local inventory = types.Actor.inventory(actor)
-    for id, pack in pairs(packs) do
-        if not pack.craftingOnly and not inventory:find(id) then
+    for _, id in ipairs(stock) do
+        if not inventory:find(id) then
             world.createObject(id, 1):moveInto(actor)
         end
     end
@@ -97,7 +99,7 @@ return {
             for _, actor in ipairs(world.players) do normalizeInventory(actor) end
         end,
         onSave = function() return { version = 3, generated = generated, cache = generatedCache } end,
-        -- Discard the legacy one-time stock flag: testing stock tops up on activation.
+        -- Ignore legacy stock flags; assigned missing stock tops up on activation.
         onLoad = function(data)
             for id in pairs(generated) do packs[id] = nil end
             generated = data and data.generated or {}

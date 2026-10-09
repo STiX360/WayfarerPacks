@@ -7,7 +7,7 @@
   "engine_version": "0.51.0",
   "version_file": "VERSION",
   "main_branch": "main",
-  "prerelease": true,
+  "prerelease": false,
   "content_manifest": "WayfarerPacks.omwscripts",
   "content_files": ["WayfarerPacks.esp", "WayfarerPacks.omwscripts"],
   "files": {
@@ -21,6 +21,7 @@
     "Wayfarer Packs/scripts/wayfarer_packs/global.lua": "scripts/wayfarer_packs/global.lua",
     "Wayfarer Packs/scripts/wayfarer_packs/player.lua": "scripts/wayfarer_packs/player.lua",
     "Wayfarer Packs/scripts/wayfarer_packs/quality.lua": "scripts/wayfarer_packs/quality.lua",
+    "Wayfarer Packs/scripts/wayfarer_packs/merchants.lua": "scripts/wayfarer_packs/merchants.lua",
     "Wayfarer Packs/icons/wayfarer_packs/wfp_satchel.tga": "icons/wayfarer_packs/wfp_satchel.tga",
     "Wayfarer Packs/icons/wayfarer_packs/wfp_backpack.tga": "icons/wayfarer_packs/wfp_backpack.tga",
     "Wayfarer Packs/icons/wayfarer_packs/wfp_expedition.tga": "icons/wayfarer_packs/wfp_expedition.tga",

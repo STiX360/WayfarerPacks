@@ -1,0 +1,477 @@
+{
+  "source": "https://en.uesp.net/wiki/Morrowind:Trader",
+  "revision": 3126622,
+  "retrieved": "2026-10-10",
+  "traders": [
+    {
+      "id": "ababael timsar-dadisun",
+      "name": "Ababael Timsar-Dadisun",
+      "gold": 9000,
+      "sells_torches": true
+    },
+    {
+      "id": "fonas retheran",
+      "name": "Fonas Retheran",
+      "gold": 1300,
+      "sells_torches": true
+    },
+    {
+      "id": "lliros tures",
+      "name": "Lliros Tures",
+      "gold": 1300,
+      "sells_torches": true
+    },
+    {
+      "id": "thongar",
+      "name": "Thongar",
+      "gold": 1200,
+      "sells_torches": true
+    },
+    {
+      "id": "verick gemain",
+      "name": "Verick Gemain",
+      "gold": 1100,
+      "sells_torches": true
+    },
+    {
+      "id": "vasesius viciulus",
+      "name": "Vasesius Viciulus",
+      "gold": 1000,
+      "sells_torches": true
+    },
+    {
+      "id": "malpenix blonia",
+      "name": "Malpenix Blonia",
+      "gold": 899,
+      "sells_torches": true
+    },
+    {
+      "id": "ancola",
+      "name": "Ancola",
+      "gold": 800,
+      "sells_torches": true
+    },
+    {
+      "id": "arrille",
+      "name": "Arrille",
+      "gold": 800,
+      "sells_torches": false
+    },
+    {
+      "id": "clagius clanler",
+      "name": "Clagius Clanler",
+      "gold": 800,
+      "sells_torches": true
+    },
+    {
+      "id": "tiras sadus",
+      "name": "Tiras Sadus",
+      "gold": 799,
+      "sells_torches": true
+    },
+    {
+      "id": "dralasa nithryon",
+      "name": "Dralasa Nithryon",
+      "gold": 700,
+      "sells_torches": false
+    },
+    {
+      "id": "heifnir",
+      "name": "Heifnir",
+      "gold": 700,
+      "sells_torches": false
+    },
+    {
+      "id": "balen andrano",
+      "name": "Balen Andrano",
+      "gold": 600,
+      "sells_torches": true
+    },
+    {
+      "id": "berwen",
+      "name": "Berwen",
+      "gold": 600,
+      "sells_torches": true
+    },
+    {
+      "id": "galtis guvron",
+      "name": "Galtis Guvron",
+      "gold": 600,
+      "sells_torches": true
+    },
+    {
+      "id": "ra'virr",
+      "name": "Ra'Virr",
+      "gold": 600,
+      "sells_torches": false
+    },
+    {
+      "id": "lucretinaus olcinius",
+      "name": "Lucretinaus Olcinius",
+      "gold": 600,
+      "sells_torches": true
+    },
+    {
+      "id": "daynes redothril",
+      "name": "Daynes Redothril",
+      "gold": 500,
+      "sells_torches": true
+    },
+    {
+      "id": "elegal",
+      "name": "Elegal",
+      "gold": 500,
+      "sells_torches": true
+    },
+    {
+      "id": "fadase selvayn",
+      "name": "Fadase Selvayn",
+      "gold": 500,
+      "sells_torches": true
+    },
+    {
+      "id": "hjotra the peacock",
+      "name": "Hjotra the Peacock",
+      "gold": 500,
+      "sells_torches": true
+    },
+    {
+      "id": "irgola",
+      "name": "Irgola",
+      "gold": 500,
+      "sells_torches": false
+    },
+    {
+      "id": "kaye",
+      "name": "Kaye",
+      "gold": 500,
+      "sells_torches": true
+    },
+    {
+      "id": "goldyn belaram",
+      "name": "Goldyn Belaram",
+      "gold": 450,
+      "sells_torches": true
+    },
+    {
+      "id": "mebestian ence",
+      "name": "Mebestian Ence",
+      "gold": 449,
+      "sells_torches": true
+    },
+    {
+      "id": "ferele athram",
+      "name": "Ferele Athram",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "gadayn andarys",
+      "name": "Gadayn Andarys",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "meder nulen",
+      "name": "Meder Nulen",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "mevel fererus",
+      "name": "Mevel Fererus",
+      "gold": 400,
+      "sells_torches": false
+    },
+    {
+      "id": "naspis apinia",
+      "name": "Naspis Apinia",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "ralds oril",
+      "name": "Ralds Oril",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "ravoso aryon",
+      "name": "Ravoso Aryon",
+      "gold": 400,
+      "sells_torches": false
+    },
+    {
+      "id": "sedam omalen",
+      "name": "Sedam Omalen",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "shulki ashunbabi",
+      "name": "Shulki Ashunbabi",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "tervur braven",
+      "name": "Tervur Braven",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "urfing",
+      "name": "Urfing",
+      "gold": 400,
+      "sells_torches": true
+    },
+    {
+      "id": "landorume",
+      "name": "Landorume",
+      "gold": 350,
+      "sells_torches": true
+    },
+    {
+      "id": "mandur omalen",
+      "name": "Mandur Omalen",
+      "gold": 350,
+      "sells_torches": true
+    },
+    {
+      "id": "mossanon",
+      "name": "Mossanon",
+      "gold": 350,
+      "sells_torches": false
+    },
+    {
+      "id": "nivos drivam",
+      "name": "Nivos Drivam",
+      "gold": 350,
+      "sells_torches": false
+    },
+    {
+      "id": "syloria siruliulus",
+      "name": "Syloria Siruliulus",
+      "gold": 325,
+      "sells_torches": true
+    },
+    {
+      "id": "allding",
+      "name": "Allding",
+      "gold": 300,
+      "sells_torches": true
+    },
+    {
+      "id": "ashur-dan",
+      "name": "Ashur-Dan",
+      "gold": 300,
+      "sells_torches": false
+    },
+    {
+      "id": "both gro-durug",
+      "name": "Both gro-Durug",
+      "gold": 300,
+      "sells_torches": true
+    },
+    {
+      "id": "jeanne",
+      "name": "Jeanne",
+      "gold": 300,
+      "sells_torches": true
+    },
+    {
+      "id": "tarvyn faren",
+      "name": "Tarvyn Faren",
+      "gold": 250,
+      "sells_torches": false
+    },
+    {
+      "id": "bervyn lleryn",
+      "name": "Bervyn Lleryn",
+      "gold": 250,
+      "sells_torches": false
+    },
+    {
+      "id": "marasa aren",
+      "name": "Marasa Aren",
+      "gold": 250,
+      "sells_torches": true
+    },
+    {
+      "id": "sottilde",
+      "name": "Sottilde",
+      "gold": 250,
+      "sells_torches": true
+    },
+    {
+      "id": "trasteve",
+      "name": "Trasteve",
+      "gold": 250,
+      "sells_torches": true
+    },
+    {
+      "id": "alveno andules",
+      "name": "Alveno Andules",
+      "gold": 200,
+      "sells_torches": true
+    },
+    {
+      "id": "kurapli",
+      "name": "Kurapli",
+      "gold": 200,
+      "sells_torches": false
+    },
+    {
+      "id": "nalis gals",
+      "name": "Nalis Gals",
+      "gold": 200,
+      "sells_torches": false
+    },
+    {
+      "id": "fryfnhild",
+      "name": "Fryfnhild",
+      "gold": 150,
+      "sells_torches": false
+    },
+    {
+      "id": "hinald",
+      "name": "Hinald",
+      "gold": 150,
+      "sells_torches": true
+    },
+    {
+      "id": "massarapal",
+      "name": "Massarapal",
+      "gold": 150,
+      "sells_torches": false
+    },
+    {
+      "id": "perien aurelie",
+      "name": "Perien Aurelie",
+      "gold": 150,
+      "sells_torches": true
+    },
+    {
+      "id": "rarvela teran",
+      "name": "Rarvela Teran",
+      "gold": 150,
+      "sells_torches": true
+    },
+    {
+      "id": "selvura andrano",
+      "name": "Selvura Andrano",
+      "gold": 150,
+      "sells_torches": true
+    },
+    {
+      "id": "sernsi drelas",
+      "name": "Sernsi Drelas",
+      "gold": 150,
+      "sells_torches": false
+    },
+    {
+      "id": "alarvyne indalas",
+      "name": "Alarvyne Indalas",
+      "gold": 100,
+      "sells_torches": false
+    },
+    {
+      "id": "baissa",
+      "name": "Baissa",
+      "gold": 100,
+      "sells_torches": true
+    },
+    {
+      "id": "rathal barus",
+      "name": "Rathal Barus",
+      "gold": 100,
+      "sells_torches": false
+    },
+    {
+      "id": "ashumanu eraishah",
+      "name": "Ashumanu Eraishah",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "brathus dals",
+      "name": "Brathus Dals",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "dolyn rols",
+      "name": "Dolyn Rols",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "dunel saryon",
+      "name": "Dunel Saryon",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "gomeso sarano",
+      "name": "Gomeso Sarano",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "helviane desele",
+      "name": "Helviane Desele",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "lanabi",
+      "name": "Lanabi",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "trivura arenim",
+      "name": "Trivura Arenim",
+      "gold": 75,
+      "sells_torches": false
+    },
+    {
+      "id": "gindas ildram",
+      "name": "Gindas Ildram",
+      "gold": 70,
+      "sells_torches": false
+    },
+    {
+      "id": "moroni uvelas",
+      "name": "Moroni Uvelas",
+      "gold": 60,
+      "sells_torches": false
+    },
+    {
+      "id": "gadela andus",
+      "name": "Gadela Andus",
+      "gold": 50,
+      "sells_torches": false
+    },
+    {
+      "id": "orns omaren",
+      "name": "Orns Omaren",
+      "gold": 50,
+      "sells_torches": false
+    },
+    {
+      "id": "selkirnemus",
+      "name": "Selkirnemus",
+      "gold": 50,
+      "sells_torches": false
+    }
+  ],
+  "torch_stock_source": {
+    "master": "Morrowind.esm",
+    "retrieved": "2026-10-10",
+    "method": "Carryable Torch lights in NPC inventory, owned containers, or owned display items; Lights barter service required."
+  },
+  "extra_sellers": [
+    "arrille"
+  ]
+}

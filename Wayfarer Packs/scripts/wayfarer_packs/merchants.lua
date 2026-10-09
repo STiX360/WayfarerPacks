@@ -1,0 +1,50 @@
+-- Generated from tools/wayfarer_traders.json; fixed UESP gold, not live gold.
+-- Source revision 3126622, retrieved 2026-10-10.
+return {
+    ["ababael timsar-dadisun"] = { "wfp_backpack", "wfp_expedition" }, -- 9000 gold
+    ["fonas retheran"] = { "wfp_backpack", "wfp_expedition" }, -- 1300 gold
+    ["lliros tures"] = { "wfp_backpack", "wfp_expedition" }, -- 1300 gold
+    ["thongar"] = { "wfp_backpack", "wfp_expedition" }, -- 1200 gold
+    ["verick gemain"] = { "wfp_backpack", "wfp_expedition" }, -- 1100 gold
+    ["vasesius viciulus"] = { "wfp_backpack", "wfp_expedition" }, -- 1000 gold
+    ["malpenix blonia"] = { "wfp_satchel", "wfp_backpack" }, -- 899 gold
+    ["ancola"] = { "wfp_satchel", "wfp_backpack" }, -- 800 gold
+    ["arrille"] = { "wfp_satchel", "wfp_backpack" }, -- 800 gold
+    ["clagius clanler"] = { "wfp_satchel", "wfp_backpack" }, -- 800 gold
+    ["tiras sadus"] = { "wfp_satchel", "wfp_backpack" }, -- 799 gold
+    ["balen andrano"] = { "wfp_satchel", "wfp_backpack" }, -- 600 gold
+    ["berwen"] = { "wfp_satchel", "wfp_backpack" }, -- 600 gold
+    ["galtis guvron"] = { "wfp_satchel", "wfp_backpack" }, -- 600 gold
+    ["lucretinaus olcinius"] = { "wfp_satchel", "wfp_backpack" }, -- 600 gold
+    ["daynes redothril"] = { "wfp_satchel", "wfp_backpack" }, -- 500 gold
+    ["elegal"] = { "wfp_satchel", "wfp_backpack" }, -- 500 gold
+    ["fadase selvayn"] = { "wfp_satchel", "wfp_backpack" }, -- 500 gold
+    ["hjotra the peacock"] = { "wfp_satchel", "wfp_backpack" }, -- 500 gold
+    ["kaye"] = { "wfp_satchel", "wfp_backpack" }, -- 500 gold
+    ["goldyn belaram"] = { "wfp_satchel" }, -- 450 gold
+    ["mebestian ence"] = { "wfp_satchel" }, -- 449 gold
+    ["ferele athram"] = { "wfp_satchel" }, -- 400 gold
+    ["gadayn andarys"] = { "wfp_satchel" }, -- 400 gold
+    ["meder nulen"] = { "wfp_satchel" }, -- 400 gold
+    ["naspis apinia"] = { "wfp_satchel" }, -- 400 gold
+    ["ralds oril"] = { "wfp_satchel" }, -- 400 gold
+    ["sedam omalen"] = { "wfp_satchel" }, -- 400 gold
+    ["shulki ashunbabi"] = { "wfp_satchel" }, -- 400 gold
+    ["tervur braven"] = { "wfp_satchel" }, -- 400 gold
+    ["urfing"] = { "wfp_satchel" }, -- 400 gold
+    ["landorume"] = { "wfp_satchel" }, -- 350 gold
+    ["mandur omalen"] = { "wfp_satchel" }, -- 350 gold
+    ["syloria siruliulus"] = { "wfp_satchel" }, -- 325 gold
+    ["allding"] = { "wfp_satchel" }, -- 300 gold
+    ["both gro-durug"] = { "wfp_satchel" }, -- 300 gold
+    ["jeanne"] = { "wfp_satchel" }, -- 300 gold
+    ["marasa aren"] = { "wfp_satchel" }, -- 250 gold
+    ["sottilde"] = { "wfp_satchel" }, -- 250 gold
+    ["trasteve"] = { "wfp_satchel" }, -- 250 gold
+    ["alveno andules"] = { "wfp_satchel" }, -- 200 gold
+    ["hinald"] = { "wfp_satchel" }, -- 150 gold
+    ["perien aurelie"] = { "wfp_satchel" }, -- 150 gold
+    ["rarvela teran"] = { "wfp_satchel" }, -- 150 gold
+    ["selvura andrano"] = { "wfp_satchel" }, -- 150 gold
+    ["baissa"] = { "wfp_satchel" }, -- 100 gold
+}

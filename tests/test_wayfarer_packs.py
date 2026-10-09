@@ -364,7 +364,7 @@ class ScriptTests(unittest.TestCase):
             assert(usage.handler({recordId='misc_de_lute_01'}, player) == nil)
         """)
 
-    def test_merchant_testing_stock_tops_up_without_duplicates_and_ignores_legacy_flag(self):
+    def test_assigned_merchant_stock_tops_up_without_duplicates_and_ignores_legacy_flag(self):
         self.lua.execute("""
             global = require('scripts.wayfarer_packs.global')
             merchant = {recordId='arrille', id='arrille-ref', type=types.NPC, stock={}}
@@ -372,19 +372,65 @@ class ScriptTests(unittest.TestCase):
                 for _, item in ipairs(merchant.stock) do if item.recordId == id then return item end end
             end}
             global.engineHandlers.onActorActive(merchant)
-            assert(created == 3 and #merchant.stock == 3)
-            global.engineHandlers.onActorActive(merchant); assert(created == 3)
+            assert(created == 2 and #merchant.stock == 2)
+            assert(merchant.stock[1].recordId == 'wfp_satchel')
+            assert(merchant.stock[2].recordId == 'wfp_backpack')
+            global.engineHandlers.onActorActive(merchant); assert(created == 2)
             table.remove(merchant.stock, 1)
             global.engineHandlers.onLoad({version=1, supplied={['arrille-ref']=true}})
             global.engineHandlers.onActorActive(merchant)
-            assert(created == 4 and #merchant.stock == 3)
+            assert(created == 3 and #merchant.stock == 2)
             saved = global.engineHandlers.onSave(); assert(saved.version == 3)
             global.engineHandlers.onLoad(saved)
-            global.engineHandlers.onActorActive(merchant); assert(created == 4)
+            global.engineHandlers.onActorActive(merchant); assert(created == 3)
             global.engineHandlers.onActorActive({recordId='other', type=types.NPC})
-            assert(created == 4)
+            assert(created == 3)
             merchant.stock = {}
-            global.engineHandlers.onActorActive(merchant); assert(created == 7)
+            global.engineHandlers.onActorActive(merchant); assert(created == 5)
+        """)
+
+    def test_only_torch_sellers_and_arrille_receive_fixed_stock_and_ignore_live_gold(self):
+        data = json.loads((ROOT / 'tools/wayfarer_traders.json').read_text())
+        self.lua.execute("global = require('scripts.wayfarer_packs.global')")
+        for trader in data['traders']:
+            with self.subTest(trader=trader['id']):
+                self.lua.globals().trader_id = trader['id']
+                self.lua.execute("""
+                    merchant = {recordId=trader_id, type=types.NPC, stock={}, gold=0}
+                    merchant.inventory = {find=function(inv,id)
+                        for _, item in ipairs(merchant.stock) do
+                            if item.recordId == id then return item end
+                        end
+                    end}
+                    global.engineHandlers.onActorActive(merchant)
+                    merchant.gold = 999999
+                    global.engineHandlers.onActorActive(merchant)
+                """)
+                actual = [item['recordId'] for _, item in self.lua.globals().merchant.stock.items()]
+                eligible = trader['sells_torches'] or trader['id'] == 'arrille'
+                self.assertEqual(actual, builder.merchant_packs(trader['gold']) if eligible else [])
+                self.assertIn(len(actual), (1, 2) if eligible else (0,))
+                self.assertEqual(len(actual), len(set(actual)))
+
+    def test_merchant_stock_preserves_resale_items_and_rejects_non_npcs(self):
+        self.lua.execute("""
+            global = require('scripts.wayfarer_packs.global')
+            global.engineHandlers.onActorActive({recordId='arrille', type=types.Miscellaneous})
+            global.engineHandlers.onActorActive({recordId='mod_added_trader', type=types.NPC})
+            global.engineHandlers.onActorActive({recordId="ra'virr", type=types.NPC})
+            assert(created == 0)
+            merchant = {recordId='arrille', type=types.NPC,
+                stock={{recordId='wfp_expedition', count=2},
+                       {recordId='wfp_backpack_artisan', count=1},
+                       {recordId='unrelated', count=1}}}
+            merchant.inventory = {find=function(inv,id)
+                for _, item in ipairs(merchant.stock) do if item.recordId == id then return item end end
+            end}
+            global.engineHandlers.onActorActive(merchant)
+            assert(created == 2 and #merchant.stock == 5)
+            assert(merchant.stock[1].recordId == 'wfp_expedition' and merchant.stock[1].count == 2)
+            assert(merchant.stock[2].recordId == 'wfp_backpack_artisan')
+            assert(merchant.stock[3].recordId == 'unrelated')
         """)
 
 
@@ -401,6 +447,32 @@ def records(data, header_size):
 
 
 class DistributionTests(unittest.TestCase):
+    def test_merchant_wealth_tiers_and_snapshot(self):
+        data = json.loads((ROOT / 'tools/wayfarer_traders.json').read_text())
+        self.assertEqual(data['source'], 'https://en.uesp.net/wiki/Morrowind:Trader')
+        self.assertEqual(data['revision'], 3126622)
+        self.assertEqual(len(data['traders']), 77)
+        self.assertEqual(len({row['id'] for row in data['traders']}), 77)
+        self.assertEqual(sum(row['sells_torches'] for row in data['traders']), 45)
+        self.assertEqual(data['extra_sellers'], ['arrille'])
+        self.assertFalse(next(row for row in data['traders'] if row['id'] == 'arrille')['sells_torches'])
+        for gold in (0, 50, 499):
+            self.assertEqual(builder.merchant_packs(gold), ['wfp_satchel'])
+        for gold in (500, 800, 999):
+            self.assertEqual(builder.merchant_packs(gold), ['wfp_satchel', 'wfp_backpack'])
+        for gold in (1000, 1300, 9000):
+            self.assertEqual(builder.merchant_packs(gold), ['wfp_backpack', 'wfp_expedition'])
+        lua = LuaRuntime(unpack_returned_tuples=True)
+        stocks = lua.execute((MOD / 'scripts/wayfarer_packs/merchants.lua').read_text())
+        self.assertEqual(len(list(stocks.items())), 46)
+        self.assertIsNone(stocks['fryfnhild'])
+        self.assertIsNone(stocks['gadela andus'])
+        for row in data['traders']:
+            if row['sells_torches'] or row['id'] == 'arrille':
+                self.assertEqual(list(stocks[row['id']].values()), builder.merchant_packs(row['gold']))
+            else:
+                self.assertIsNone(stocks[row['id']])
+
     def test_quality_scaling_rounding_and_no_balance_cap(self):
         lua = LuaRuntime(unpack_returned_tuples=True)
         quality = lua.execute((MOD / 'scripts/wayfarer_packs/quality.lua').read_text())
@@ -475,10 +547,10 @@ class DistributionTests(unittest.TestCase):
     def test_records_match_balance_data_and_assets(self):
         packs = builder.all_packs(json.loads((MOD / 'packs.json').read_text()))
         contents = list(records((MOD / 'WayfarerPacks.esp').read_bytes(), 16))
-        self.assertEqual(len(contents), 2+2*len(packs))
+        self.assertEqual(len(contents), 6+2*len(packs))
         self.assertEqual(contents[0][0], 'TES3')
         header = dict(records(contents[0][1], 8))
-        self.assertEqual(struct.unpack_from('<i', header['HEDR'], 296)[0], 13)
+        self.assertEqual(struct.unpack_from('<i', header['HEDR'], 296)[0], len(contents)-1)
         self.assertEqual(header['MAST'], b'Morrowind.esm\0')
         for i, pack in enumerate(packs):
             kind, body = contents[1+i*2]
@@ -496,10 +568,33 @@ class DistributionTests(unittest.TestCase):
             self.assertEqual(struct.unpack('<iii', spell['SPDT']), (1, 0, 0))
             self.assertEqual(struct.unpack('<hbbiiiii', spell['ENAM']),
                              (8, -1, -1, 0, 0, 0, pack['feather'], pack['feather']))
-        self.assertEqual(contents[-1][0], 'SCPT')
-        script = dict(records(contents[-1][1], 8))
+        self.assertEqual(contents[1+2*len(packs)][0], 'SCPT')
+        script = dict(records(contents[1+2*len(packs)][1], 8))
         self.assertEqual(script['SCHD'][:32].rstrip(b'\0'), b'wfp_unique_item')
         self.assertIn(b'begin wfp_unique_item', script['SCTX'])
+
+    def test_arrille_travel_packs_dialogue_and_topic_registration(self):
+        contents = list(records((MOD / 'WayfarerPacks.esp').read_bytes(), 16))
+        topic = [(kind, dict(records(body, 8))) for kind, body in contents if kind in ('DIAL', 'INFO')]
+        self.assertEqual([kind for kind, _ in topic], ['DIAL', 'INFO'])
+        self.assertEqual(topic[0][1]['NAME'], b'travel packs\0')
+        self.assertEqual(topic[0][1]['DATA'], b'\0')
+        info = topic[1][1]
+        self.assertEqual(info['ONAM'], b'arrille\0')
+        self.assertEqual(info['DATA'], struct.pack('<iibbbB', 0, 0, -1, -1, -1, 0))
+        self.assertEqual(info['NAME'].rstrip(b'\0').decode(),
+                         "The Wayfarer's Satchel is a good bargain for a traveler. "
+                         "Room for provisions, potions, and a few things to sell when you reach town. "
+                         "The Wayfarer's Backpack costs more, but it carries more. "
+                         "A better choice if you make your living collecting things other people no longer need.")
+        self.assertNotIn('BNAM', info)
+        self.assertFalse(any(kind == 'NPC_' for kind, _ in contents))
+        startup = next(dict(records(body, 8)) for kind, body in contents if kind == 'SSCR')
+        self.assertEqual(startup['NAME'], b'wfp_dialogue_init\0')
+        script = next(dict(records(body, 8)) for kind, body in contents
+                      if kind == 'SCPT' and dict(records(body, 8))['SCHD'].startswith(b'wfp_dialogue_init\0'))
+        self.assertIn(b'AddTopic "travel packs"', script['SCTX'])
+        self.assertIn(b'StopScript wfp_dialogue_init', script['SCTX'])
 
     def test_archive_has_both_content_files_and_every_asset(self):
         with ZipFile(ROOT / f'dist/WayfarerPacks-{builder.VERSION}.zip') as archive:
@@ -568,6 +663,18 @@ class DistributionTests(unittest.TestCase):
             with ZipFile(ROOT / f'dist/WayfarerPacks-{builder.VERSION}.zip') as archive:
                 self.assertFalse(any('vanilla-fit' in name or name.endswith('.nif')
                                      for name in archive.namelist()))
+
+    def test_trader_reference_stays_outside_production(self):
+        self.assertTrue((ROOT / 'docs/TRADERS.md').is_file())
+        self.assertFalse((MOD / 'TRADERS.md').exists())
+        with ZipFile(ROOT / f'dist/WayfarerPacks-{builder.VERSION}.zip') as archive:
+            self.assertFalse(any(Path(name).name == 'TRADERS.md' for name in archive.namelist()))
+
+    def test_model_headers_do_not_embed_release_version(self):
+        for path in (MOD / 'meshes/wayfarer_packs').glob('*.osgt'):
+            with self.subTest(model=path.name):
+                self.assertEqual(path.read_text().splitlines()[:3],
+                                 ['#Ascii Scene', '#Version 161', '#Generator WayfarerPacks'])
 
     def test_flap_contact_threaded_buckles_and_anchored_harnesses(self):
         for pack in json.loads((MOD / 'packs.json').read_text()):

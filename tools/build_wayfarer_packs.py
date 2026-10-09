@@ -12,6 +12,12 @@ VERSION = (ROOT / 'VERSION').read_text(encoding='ascii').strip()
 WORN_BACK_OFFSET = 5
 WORN_HEIGHT_OFFSET = 5
 BODY_FIT = json.loads((ROOT / 'tools/wayfarer_body_fit.json').read_text())
+TRAVEL_PACKS_TOPIC = 'travel packs'
+ARRILLE_TRAVEL_PACKS = (
+    "The Wayfarer's Satchel is a good bargain for a traveler. "
+    "Room for provisions, potions, and a few things to sell when you reach town. "
+    "The Wayfarer's Backpack costs more, but it carries more. "
+    "A better choice if you make your living collecting things other people no longer need.")
 
 
 def subrecord(tag, data):
@@ -58,6 +64,19 @@ def plugin(packs):
         subrecord('SCHD', struct.pack('<32s5I', b'wfp_unique_item', 0, 0, 0, 0, 0)),
         subrecord('SCDT', b''),
         text_sub('SCTX', 'begin wfp_unique_item\nend wfp_unique_item\n')))
+    # Register a known topic without replacing any existing greetings or NPCs.
+    records.append(record('SCPT',
+        subrecord('SCHD', struct.pack('<32s5I', b'wfp_dialogue_init', 0, 0, 0, 0, 0)),
+        subrecord('SCDT', b''),
+        text_sub('SCTX', 'begin wfp_dialogue_init\n'
+                 f'AddTopic "{TRAVEL_PACKS_TOPIC}"\n'
+                 'StopScript wfp_dialogue_init\nend wfp_dialogue_init\n')))
+    records.append(record('SSCR', text_sub('NAME', 'wfp_dialogue_init'), text_sub('DATA', '')))
+    records.append(record('DIAL', text_sub('NAME', TRAVEL_PACKS_TOPIC), subrecord('DATA', b'\0')))
+    records.append(record('INFO', text_sub('INAM', 'wfp_arrille_travel_packs'),
+        text_sub('PNAM', ''), text_sub('NNAM', ''),
+        subrecord('DATA', struct.pack('<iibbbB', 0, 0, -1, -1, -1, 0)),
+        text_sub('ONAM', 'arrille'), text_sub('NAME', ARRILLE_TRAVEL_PACKS)))
     header = struct.pack('<fi32s256si', 1.3, 0, b'Wayfarer Packs',
                          f'Wayfarer Packs {VERSION} - script-managed backpacks.'.encode('ascii'), len(records))
     return record('TES3', subrecord('HEDR', header), text_sub('MAST', 'Morrowind.esm'),
@@ -439,7 +458,7 @@ def osg(triangles, offset=(0, 0, 0), uv_triangles=None):
                 f'          UniqueID {unique_id}\n          Binding {binding}\n          vector {len(values)} {{\n'
                 f'{rows}\n          }}\n        }}\n      }}\n')
     # OpenMW needs an explicit material to preserve vertex colors in its shaders.
-    return (f'#Ascii Scene\n#Version 161\n#Generator WayfarerPacks {VERSION}\n'
+    return ('#Ascii Scene\n#Version 161\n#Generator WayfarerPacks\n'
             'osg::Geode {\n  UniqueID 1\n'
             '  StateSet TRUE {\n    osg::StateSet {\n      UniqueID 7\n'
             '      AttributeList 1 {\n        osg::Material {\n          UniqueID 8\n'
@@ -525,7 +544,56 @@ def png(pixels, width, height):
             + chunk(b'IDAT', zlib.compress(raw)) + chunk(b'IEND', b''))
 
 
+def merchant_packs(gold):
+    if gold < 500:
+        return ['wfp_satchel']
+    if gold < 1000:
+        return ['wfp_satchel', 'wfp_backpack']
+    return ['wfp_backpack', 'wfp_expedition']
+
+
+def build_merchants():
+    data = json.loads((ROOT / 'tools/wayfarer_traders.json').read_text(encoding='ascii'))
+    eligible = [trader for trader in data['traders']
+                if trader['sells_torches'] or trader['id'] in data['extra_sellers']]
+    lines = ['-- Generated from tools/wayfarer_traders.json; fixed UESP gold, not live gold.',
+             f'-- Source revision {data["revision"]}, retrieved {data["retrieved"]}.', 'return {']
+    seen = set()
+    for trader in eligible:
+        assert trader['id'] not in seen
+        seen.add(trader['id'])
+        stock = ', '.join(json.dumps(id) for id in merchant_packs(trader['gold']))
+        lines.append(f'    [{json.dumps(trader["id"])}] = {{ {stock} }}, -- {trader["gold"]} gold')
+    lines.append('}')
+    (MOD / 'scripts/wayfarer_packs/merchants.lua').write_text('\n'.join(lines)+'\n', encoding='ascii')
+    documentation = ['# Trader Stock', '', f'Source: [{data["source"]}]({data["source"]}),',
+                     f'revision {data["revision"]}, retrieved {data["retrieved"]}.', '',
+                     'Includes 45 vanilla torch sellers from the 77 listed Traders and Pawnbrokers,',
+                     'plus Arrille as an explicit exception (46 merchants total). NPC record IDs',
+                     'were matched against the vanilla Morrowind master during development.',
+                     'Torch sellers were identified from carryable Torch lights in NPC inventories,',
+                     'owned stock containers, and owned display items, with Lights barter enabled.',
+                     'This eligibility snapshot is fixed, not a live inventory or modlist scan.',
+                     'Assignments are fixed at build time; gameplay never reads merchant gold.', '',
+                     '- Under 500 gold: one Satchel (Feather 25).',
+                     '- 500-999 gold: one Satchel and one Backpack (Feather 25/50).',
+                     '- 1,000+ gold: one Backpack and one Expedition Pack (Feather 50/75).', '',
+                     'Missing assigned stock replenishes when the NPC becomes active.',
+                     'Only one copy of each assigned type is added. Existing extra items, including',
+                     'player-sold packs or stock from older releases, are never deleted.',
+                     'Artisan variants are crafting-only. Mod-added traders are not auto-enrolled.', '',
+                     '| Trader | Record ID | Listed Gold | Packs |', '| --- | --- | ---: | --- |']
+    names = {'wfp_satchel': 'Satchel', 'wfp_backpack': 'Backpack', 'wfp_expedition': 'Expedition'}
+    for trader in eligible:
+        stock = ', '.join(names[id] for id in merchant_packs(trader['gold']))
+        documentation.append(f'| {trader["name"]} | `{trader["id"]}` | {trader["gold"]} | {stock} |')
+    docs = ROOT / 'docs'
+    docs.mkdir(exist_ok=True)
+    (docs / 'TRADERS.md').write_text('\n'.join(documentation)+'\n', encoding='ascii')
+
+
 def build():
+    build_merchants()
     packs = json.loads((MOD / 'packs.json').read_text())
     equipment = all_packs(packs)
     ids = set()

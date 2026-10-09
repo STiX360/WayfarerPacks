@@ -40,7 +40,7 @@ return {
                 if actor.recordId == 'arrille' then
                     local inv = types.Actor.inventory(actor)
                     stocked = inv:find('wfp_satchel') ~= nil and inv:find('wfp_backpack') ~= nil
-                        and inv:find('wfp_expedition') ~= nil
+                        and inv:find('wfp_expedition') == nil
                     break
                 end
             end

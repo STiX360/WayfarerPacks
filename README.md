@@ -5,17 +5,18 @@ optional crafting, and quality-scaled upgrades.
 
 ## In Game
 
-- Three normal packs: Feather 25, 50, and 75, available from Arrille.
+- Three normal packs: Feather 25, 50, and 75, sold by 45 vanilla torch-selling
+  Traders/Pawnbrokers plus Arrille. Fixed merchant wealth determines one or two types.
 - One worn pack at a time; duplicates remain separate inventory items.
+- Arrille's "travel packs" dialogue recommends the Satchel and Backpack.
 - Optional Crafting Framework recipes use leather/hides, not clothing.
 - Artisan's Touch adds one diamond, doubles crafting time, and scales Feather
   with crafting quality. At governing skill 100: Feather 38, 71, and 101.
 - Crafting Framework and Inventory Extender are optional, not hard dependencies.
 
 See [installation and mod details](Wayfarer%20Packs/README.md) and
-[the isolated test environment](TESTING-WAYFARER-PACKS.md).
-Release preparation is documented in [PUBLISHING.md](PUBLISHING.md), with
-separate acceptance evidence in [TESTING.md](TESTING.md).
+[testing instructions and validation results](TESTING.md).
+Release preparation is documented in [PUBLISHING.md](PUBLISHING.md).
 
 ## Development
 
@@ -29,7 +30,7 @@ python -m unittest discover -s tests -v
 python tools/release.py verify
 ```
 
-The build produces `dist/WayfarerPacks-0.4.1.zip`, a per-file manifest, and SHA-256
+The build produces `dist/WayfarerPacks-0.4.2.zip`, a per-file manifest, and SHA-256
 checksums, and refreshes the mod's records, models, icons, catalog, and preview.
 Tests cover equipment, crafting hooks, quality scaling, distribution, and guarded
 release helpers. Real OpenMW checks

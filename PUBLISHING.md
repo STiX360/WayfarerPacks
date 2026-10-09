@@ -2,10 +2,9 @@
 
 ## Current Release Choices
 
-- Preserve version 0.4.1 and the filename `WayfarerPacks-0.4.1.zip`.
+- Current version is 0.4.2; its filename is `WayfarerPacks-0.4.2.zip`.
 - Preserve root-relative install paths and the `Wayfarer Packs/` source directory.
-- `release/config.json` currently uses the starter's prerelease setting (`true`);
-  confirm this choice before enabling publication.
+- `release/config.json` uses `prerelease: false` for stable releases.
 - Publishing is disabled unless the repository variable `RELEASES_ENABLED=true`.
 - Nexus is separately disabled unless `NEXUSMODS_ENABLED=true` and an explicit
   `NEXUSMODS_MODE=manual` or `automatic` is selected. Confirm the desired mode.
