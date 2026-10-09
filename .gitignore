@@ -1,0 +1,24 @@
+.runtime/
+.test-tools/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.log
+dist/
+node_modules/
+.npm-cache/
+.pytest_cache/
+
+# Generated preview assets; rebuild from the original mod assets.
+pack-preview/public/assets/*
+# Bethesda geometry must never be committed or published.
+**/vanilla-fit.json
+*.nif
+*.bsa
+*.omwsave
+
+# Keep only the validation notes and original pack illustration.
+reports/*
+!reports/wayfarer-packs-validation.md
+!reports/wayfarer-packs-preview.png

@@ -1,0 +1,2 @@
+GLOBAL: scripts/wayfarer_packs/global.lua
+PLAYER: scripts/wayfarer_packs/player.lua

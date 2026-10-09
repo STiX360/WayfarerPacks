@@ -1,0 +1,69 @@
+name: Upload existing release to Nexus
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing GitHub release tag matching VERSION (for example v0.4.1)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: release-publishing
+  cancel-in-progress: false
+jobs:
+  nexus:
+    if: vars.RELEASES_ENABLED == 'true' && vars.NEXUSMODS_ENABLED == 'true' && vars.NEXUSMODS_MODE == 'manual'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: nexus
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Validate dispatch and release tag
+        id: identity
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          python tools/release.py identity
+          python -c "import os; from tools.release import identity, ROOT; identity(ROOT, 'push', 'refs/tags/' + os.environ['RELEASE_TAG'])"
+      - name: Download existing GitHub artifacts without rebuilding
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          python tools/release.py download
+      - name: Verify archive and Nexus configuration
+        id: package
+        env:
+          NEXUSMODS_FILE_ID: ${{ vars.NEXUSMODS_FILE_ID }}
+          NEXUSMODS_MOD_ID: ${{ vars.NEXUSMODS_MOD_ID }}
+          NEXUSMODS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
+        run: python tools/release.py nexus-manual
+      - name: Upload unchanged archive
+        id: upload
+        uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ vars.NEXUSMODS_FILE_ID }}
+          mod_id: ${{ vars.NEXUSMODS_MOD_ID }}
+          filename: dist/${{ steps.package.outputs.filename }}
+          version: ${{ steps.package.outputs.version }}
+          changelog: ${{ steps.package.outputs.changelog }}
+          display_name: ${{ steps.package.outputs.name }} ${{ steps.package.outputs.version }}
+          category: main
+          archive_existing_version: 'false'
+          primary_mod_manager_download: 'false'
+          allow_mod_manager_download: 'true'
+          show_requirements_pop_up: 'true'
+          update_mod_version: 'true'
+      - name: Record Nexus result
+        env:
+          VERSION_ID: ${{ steps.upload.outputs.version_id }}
+        run: |
+          printf 'Nexus version ID: %s\n' "$VERSION_ID" >> "$GITHUB_STEP_SUMMARY"

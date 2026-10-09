@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wayfarer Packs | Model Studio</title></head>
+<body>
+  <header><div class="brand"><i data-lucide="backpack"></i><strong>Wayfarer Packs</strong><span>Model Studio</span></div><span class="version" id="version">Loading</span></header>
+  <main>
+    <section class="stage" aria-label="Interactive model viewport">
+      <div id="viewport"></div>
+      <div class="model-caption"><span class="eyebrow">CURRENT ASSET</span><h1 id="model-title">Wayfarer's Backpack</h1><span id="model-stats"></span></div>
+      <div id="status" role="status">Loading model and texture...</div>
+      <div class="view-tools">
+        <div class="segments" aria-label="Camera view"><button data-view="front" class="active">Front</button><button data-view="side">Side</button><button data-view="back">Back</button></div>
+        <div class="icon-tools"><button id="zoom-in" title="Zoom in" aria-label="Zoom in"><i data-lucide="zoom-in"></i></button><button id="zoom-out" title="Zoom out" aria-label="Zoom out"><i data-lucide="zoom-out"></i></button><button id="reset" title="Reset camera" aria-label="Reset camera"><i data-lucide="scan"></i></button><button id="snapshot" title="Download snapshot" aria-label="Download snapshot"><i data-lucide="camera"></i></button></div>
+      </div>
+    </section>
+    <aside>
+      <div class="panel-heading"><h2>Collection</h2><span>03 assets</span></div>
+      <div id="collection" role="tablist" aria-label="Pack model"></div>
+      <div class="settings">
+        <h2>Appearance</h2>
+        <label>Surface</label><div class="segments surface"><button data-surface="textured" class="active">Leather</button><button data-surface="clay">Clay</button><button data-surface="wire">Wire</button></div>
+        <label for="lighting">Lighting</label><select id="lighting"><option value="studio">Studio</option><option value="warm">Warm interior</option><option value="overcast">Overcast</option></select>
+        <label class="check-row"><span>Turntable</span><input type="checkbox" id="turntable"></label>
+        <label class="check-row"><span>Fit reference</span><input type="checkbox" id="reference"></label>
+        <div class="details"><h2>Asset Details</h2><dl><dt>Effect</dt><dd id="effect"></dd><dt>Weight</dt><dd id="weight"></dd><dt>Dimensions</dt><dd id="dimensions"></dd><dt>Texture</dt><dd id="texture-size"></dd><dt>Attachment</dt><dd>Spine1</dd></dl></div>
+        <div class="texture-sample"><img src="/assets/leather.png" alt="Weathered leather albedo texture"><div><strong>Weathered leather</strong><span>Albedo / repeating</span></div></div>
+      </div>
+    </aside>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

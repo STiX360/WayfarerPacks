@@ -1,0 +1,5 @@
+[
+  {"id": "wfp_satchel", "name": "Wayfarer's Satchel", "feather": 25, "weight": 2, "value": 100, "width": 20, "height": 22, "depth": 8, "color": [0.29, 0.39, 0.32]},
+  {"id": "wfp_backpack", "name": "Wayfarer's Backpack", "feather": 50, "weight": 4, "value": 300, "width": 26, "height": 32, "depth": 12, "color": [0.42, 0.25, 0.16]},
+  {"id": "wfp_expedition", "name": "Expedition Pack", "feather": 75, "weight": 6, "value": 650, "width": 30, "height": 38, "depth": 14, "color": [0.31, 0.34, 0.44]}
+]
