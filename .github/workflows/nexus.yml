@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   nexus:
-    if: vars.RELEASES_ENABLED == 'true' && vars.NEXUSMODS_ENABLED == 'true' && vars.NEXUSMODS_MODE == 'manual'
+    if: vars.RELEASES_ENABLED == 'true' && vars.NEXUSMODS_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     environment: nexus

@@ -6,8 +6,8 @@
 - Preserve root-relative install paths and the `Wayfarer Packs/` source directory.
 - `release/config.json` uses `prerelease: false` for stable releases.
 - Publishing is disabled unless the repository variable `RELEASES_ENABLED=true`.
-- Nexus is separately disabled unless `NEXUSMODS_ENABLED=true` and an explicit
-  `NEXUSMODS_MODE=manual` or `automatic` is selected. Confirm the desired mode.
+- Nexus is separately disabled unless `NEXUSMODS_ENABLED=true`. Once enabled,
+  tagged releases upload after GitHub publishing succeeds; there is no mode variable.
 - No license has been selected. Choose licensing before public distribution;
   retain `TEXTURE_SOURCE.md` and do not redistribute extracted Bethesda assets.
 
@@ -64,11 +64,11 @@ environment's secret `NEXUSMODS_API_KEY` and variables `NEXUSMODS_FILE_ID` and
 project's identifiers or credentials. Set the repository variables described above
 only when ready. Optional environment reviewers can guard actual uploads.
 
-- `manual`: dispatch `nexus.yml` from `main` with the existing release tag matching
+- To upload an existing release, dispatch `nexus.yml` from `main` with the release tag matching
   this checkout's `VERSION`. It downloads and verifies the GitHub ZIP and companions
   without rebuilding. For an older version, use the matching version of the
   workflow/config on the main branch; arbitrary mismatched tags are rejected.
-- `automatic`: after a successful tagged GitHub release, the Nexus job in
+- After a successful tagged GitHub release, the Nexus job in
   `release.yml` uploads the same verified CI archive.
 
 Uploads do not archive previous Nexus files or change the primary download.
@@ -76,4 +76,4 @@ Record the returned Nexus version ID. An ambiguous upload failure may already
 have created a version: inspect Nexus before retrying. Prefer retrying only failed
 jobs while the retained CI artifacts are still available (14 days).
 
-`release/NEXUS-DESCRIPTION.md` is a local draft, not a published page.
+Keep local Nexus BBCode drafts in the Git-ignored `.publishing/` directory.

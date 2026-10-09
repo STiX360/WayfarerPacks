@@ -72,7 +72,7 @@ jobs:
         run: python tools/release.py publish
   nexus:
     needs: [build, github-release]
-    if: vars.NEXUSMODS_ENABLED == 'true' && vars.NEXUSMODS_MODE == 'automatic' && github.event_name == 'push' && !github.event.deleted
+    if: vars.NEXUSMODS_ENABLED == 'true' && github.event_name == 'push' && !github.event.deleted
     runs-on: ubuntu-latest
     timeout-minutes: 35
     environment: nexus
