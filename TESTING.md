@@ -114,7 +114,10 @@ evidence is retained in `reports/wayfarer-packs-validation.md`.
   not rerun for those non-gameplay changes.
 
 Production ZIP SHA-256:
-`be6749602eade489a466b8fce56ab0c6718ea171c86ddadfb9055fd79ebf37cc`.
+`5a76a718d557910777dc26e5b8993872c9f53cbaed741d69a1a08d3bb516c7a3`.
+
+The local archive was repackaged and verified after README-only cleanup. This
+checksum describes that local archive, not necessarily the already-published ZIP.
 
 Merchant provenance and the full assignment table are in `docs/TRADERS.md`.
 Eligibility is a fixed snapshot of 45 torch-selling traders plus Arrille, using

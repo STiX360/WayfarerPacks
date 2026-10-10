@@ -31,7 +31,7 @@ the Feather amount as a fallback without Inventory Extender.
 With OpenMW Crafting Framework enabled, these recipes appear under Crafting /
 Travel Packs. The framework discovers `CF_recipes/wayfarerPacks.lua` automatically.
 Load `CraftingFramework.omwscripts` before `WayfarerPacks.omwscripts`. Simply
-Crafting, Skill Framework, and Sun's Dusk are not required. Without the framework,
+Crafting and Skill Framework are not required. Without the framework,
 this data file is unused: the packs still work and can be bought from Traders.
 
 | Pack | Armorer Level | Leather/Hides |
@@ -165,7 +165,7 @@ is a rest pose, not a simulation of animation, races, armor, or body replacers.
 
 In 0.3.2 inventory name cleanup removes only the Feather suffix, preserving
 Inventory Extender's stack-count suffix, including partially dragged stacks.
-Since 0.3.3 each backpack is a separate inventory item. An inert legacy item script
+Since 0.3.3 each backpack is a separate inventory item. An empty MWScript item script
 prevents OpenMW from merging duplicates; Lua still handles equipping and Feather.
 Existing stacks are separated automatically, retaining the original selected
 reference as one copy. Craft All still produces the full number of backpacks.
@@ -173,9 +173,8 @@ reference as one copy. Craft All still produces the full number of backpacks.
 To update from 0.1.x, replace that mod's files with this release and restart OpenMW.
 Record IDs and saved equipment data are unchanged; existing bags remain usable.
 
-Other mods manage their own backpack slots independently. In particular, Sun's
-Dusk packs can be worn alongside these and their bonuses can stack. This version
-does not modify Sun's Dusk or Bardcraft. NPC backpack equipping is not implemented.
+Other backpack mods manage their equipment independently, so their bonuses can
+stack with these packs. NPC backpack equipping is not implemented.
 
 Unequip before uninstalling, save, then disable both content files. To clear the
 slot through the player Lua console, enter `luap`, then
