@@ -607,6 +607,14 @@ class DistributionTests(unittest.TestCase):
                     name = path.relative_to(MOD).as_posix()
                     self.assertEqual(archive.read(name), path.read_bytes())
 
+    def test_mesh_headers_do_not_consume_the_scene_class_as_generator_version(self):
+        for path in (MOD / 'meshes/wayfarer_packs').glob('*.osgt'):
+            with self.subTest(mesh=path.name):
+                tokens = path.read_text().split()
+                self.assertEqual(tokens[:9], [
+                    '#Ascii', 'Scene', '#Version', '161', '#Generator',
+                    'WayfarerPacks', '1', 'osg::Geode', '{'])
+
     def test_meshes_have_explicit_vertex_color_materials(self):
         for path in (MOD / 'meshes/wayfarer_packs').glob('*.osgt'):
             with self.subTest(mesh=path.name):
@@ -674,7 +682,7 @@ class DistributionTests(unittest.TestCase):
         for path in (MOD / 'meshes/wayfarer_packs').glob('*.osgt'):
             with self.subTest(model=path.name):
                 self.assertEqual(path.read_text().splitlines()[:3],
-                                 ['#Ascii Scene', '#Version 161', '#Generator WayfarerPacks'])
+                                 ['#Ascii Scene', '#Version 161', '#Generator WayfarerPacks 1'])
 
     def test_flap_contact_threaded_buckles_and_anchored_harnesses(self):
         for pack in json.loads((MOD / 'packs.json').read_text()):

@@ -1,6 +1,6 @@
 #Ascii Scene
 #Version 161
-#Generator WayfarerPacks
+#Generator WayfarerPacks 1
 osg::Geode {
   UniqueID 1
   StateSet TRUE {

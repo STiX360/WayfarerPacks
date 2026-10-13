@@ -458,7 +458,8 @@ def osg(triangles, offset=(0, 0, 0), uv_triangles=None):
                 f'          UniqueID {unique_id}\n          Binding {binding}\n          vector {len(values)} {{\n'
                 f'{rows}\n          }}\n        }}\n      }}\n')
     # OpenMW needs an explicit material to preserve vertex colors in its shaders.
-    return ('#Ascii Scene\n#Version 161\n#Generator WayfarerPacks\n'
+    # OSG consumes both generator tokens; omitting the version consumes osg::Geode.
+    return ('#Ascii Scene\n#Version 161\n#Generator WayfarerPacks 1\n'
             'osg::Geode {\n  UniqueID 1\n'
             '  StateSet TRUE {\n    osg::StateSet {\n      UniqueID 7\n'
             '      AttributeList 1 {\n        osg::Material {\n          UniqueID 8\n'

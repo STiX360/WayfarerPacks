@@ -2,9 +2,9 @@
 
 ## 0.4.3
 
-- Repackage the release with the leather texture present at
-  `textures/wayfarer_packs/leather.png`, fixing missing-texture reports for the
-  Wayfarer's Satchel and related models.
+- Restore the required generator-version token in all six OSGT mesh headers.
+  Its removal in 0.4.2 caused OpenSceneGraph to misread the scene and fail to load
+  the pack models. The leather texture was already included and is unchanged.
 - Verify release archives now include every texture referenced by shipped OSGT
   meshes before GitHub or Nexus publishing can proceed.
 
