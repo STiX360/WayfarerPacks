@@ -194,6 +194,12 @@ class ReleaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Missing enabled content file'):
             release.package(self.root)
 
+    def test_mesh_texture_references_must_be_packaged(self):
+        self.config['files'].pop('Wayfarer Packs/textures/wayfarer_packs/leather.png')
+        self.write_config()
+        with self.assertRaisesRegex(ValueError, 'Missing texture referenced'):
+            release.package(self.root)
+
     def test_wayfarer_allowlist_and_version_metadata(self):
         production = {p.relative_to(ROOT).as_posix()
                       for p in (ROOT / 'Wayfarer Packs').rglob('*') if p.is_file()}

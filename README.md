@@ -30,7 +30,7 @@ python -m unittest discover -s tests -v
 python tools/release.py verify
 ```
 
-The build produces `dist/WayfarerPacks-0.4.2.zip`, a per-file manifest, and SHA-256
+The build produces `dist/WayfarerPacks-0.4.3.zip`, a per-file manifest, and SHA-256
 checksums, and refreshes the mod's records, models, icons, catalog, and preview.
 Tests cover equipment, crafting hooks, quality scaling, distribution, and guarded
 release helpers. Real OpenMW checks

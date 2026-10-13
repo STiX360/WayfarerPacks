@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.3
+
+- Repackage the release with the leather texture present at
+  `textures/wayfarer_packs/leather.png`, fixing missing-texture reports for the
+  Wayfarer's Satchel and related models.
+- Verify release archives now include every texture referenced by shipped OSGT
+  meshes before GitHub or Nexus publishing can proceed.
+
 ## 0.4.2
 
 - Add Arrille's "travel packs" topic recommending the Satchel and Backpack,

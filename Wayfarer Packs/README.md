@@ -1,4 +1,4 @@
-# Wayfarer Packs 0.4.2
+# Wayfarer Packs 0.4.3
 
 An OpenMW prototype with a script-managed backpack slot. Drag a bag from your
 inventory onto your character to equip it. Repeat to unequip; another bag replaces

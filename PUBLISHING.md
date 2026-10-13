@@ -2,7 +2,7 @@
 
 ## Current Release Choices
 
-- Current version is 0.4.2; its filename is `WayfarerPacks-0.4.2.zip`.
+- Current version is 0.4.3; its filename is `WayfarerPacks-0.4.3.zip`.
 - Preserve root-relative install paths and the `Wayfarer Packs/` source directory.
 - `release/config.json` uses `prerelease: false` for stable releases.
 - Publishing is disabled unless the repository variable `RELEASES_ENABLED=true`.

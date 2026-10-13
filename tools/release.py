@@ -113,6 +113,14 @@ def check_content(config, files):
     for name in config.get('content_files', [manifest]):
         if safe_name(name) not in files:
             raise ValueError('Missing enabled content file: ' + name)
+    for name, data in files.items():
+        if not name.casefold().endswith(('.osg', '.osgt')):
+            continue
+        mesh = data.decode('utf-8-sig')
+        for texture in re.findall(r'\bFileName\s+"([^"]+)"', mesh):
+            texture = safe_name(texture.replace('\\', '/'))
+            if texture.casefold().startswith('textures/') and texture not in files:
+                raise ValueError(f'Missing texture referenced by {name}: {texture}')
 
 
 def package(root=ROOT):
